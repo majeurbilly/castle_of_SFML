@@ -17,23 +17,19 @@ jobs:
     - name: Setup Visual Studio
       uses: microsoft/setup-msbuild@v1.1
     
-    - name: Check environment
+    - name: Install SFML via vcpkg
       run: |
-        echo "Current directory: $PWD"
-        echo "Directory contents:"
-        dir
-        echo "MSBuild location:"
-        where msbuild
-        echo "MSBuild version:"
-        msbuild /version
+        git clone https://github.com/Microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+        .\vcpkg\vcpkg install sfml:x64-windows
     
     - name: Build Debug x64
       run: |
-        msbuild "CastelOfC++/castle_of_SFML/castle_of_SFML.sln" /p:Configuration=Debug /p:Platform=x64 /p:PlatformToolset=v143 /v:minimal
+        msbuild "CastelOfC++/castle_of_SFML/castle_of_SFML.sln" /p:Configuration=Debug /p:Platform=x64 /p:PlatformToolset=v143 /p:VcpkgEnabled=true
     
     - name: Build Release x64
       run: |
-        msbuild "CastelOfC++/castle_of_SFML/castle_of_SFML.sln" /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /v:minimal
+        msbuild "CastelOfC++/castle_of_SFML/castle_of_SFML.sln" /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:VcpkgEnabled=true
     
     - name: Create Debug package
       run: |
