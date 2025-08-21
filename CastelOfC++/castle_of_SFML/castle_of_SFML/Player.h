@@ -13,6 +13,7 @@ private:
     std::vector<float> distances;
     int numRays;
     float fov;
+    const Map* map = nullptr;
 
 public:
     Player();
@@ -34,4 +35,5 @@ public:
     // Setters
     void setPosition(float newX, float newY);
     void setAngle(float newAngle);
+    void setMap(const Map* gameMap);
 };

@@ -59,10 +59,15 @@ void Player::castRays(const Map& map) {
     }
 }
 
+void Player::setMap(const Map* gameMap) {
+    map = gameMap;
+}
+
 void Player::setPosition(float newX, float newY) {
-    // Ici vous pourriez ajouter une vérification de collision avec la carte
-    x = newX;
-    y = newY;
+    if (map && !map->checkCollision(newX, newY)) {
+        x = newX;
+        y = newY;
+    }
 }
 
 void Player::setAngle(float newAngle) {

@@ -7,6 +7,7 @@
 Game::Game() : window(sf::VideoMode(sf::Vector2u(1024, 512)), "Raycasting Castle - SFML"){
 	map.init();
 	player.init(150.0f, 400.0f, 0.0f);
+	player.setMap(&map);
 	renderer.init(&window);
 }
 
