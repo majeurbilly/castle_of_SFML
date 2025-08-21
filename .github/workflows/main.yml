@@ -17,13 +17,23 @@ jobs:
     - name: Setup Visual Studio
       uses: microsoft/setup-msbuild@v1.1
     
+    - name: Check environment
+      run: |
+        echo "Current directory: $PWD"
+        echo "Directory contents:"
+        dir
+        echo "MSBuild location:"
+        where msbuild
+        echo "MSBuild version:"
+        msbuild /version
+    
     - name: Build Debug x64
       run: |
-        msbuild "CastelOfC++/castle_of_SFML/castle_of_SFML.sln" /p:Configuration=Debug /p:Platform=x64 /p:PlatformToolset=v143
+        msbuild "CastelOfC++/castle_of_SFML/castle_of_SFML.sln" /p:Configuration=Debug /p:Platform=x64 /p:PlatformToolset=v143 /v:minimal
     
     - name: Build Release x64
       run: |
-        msbuild "CastelOfC++/castle_of_SFML/castle_of_SFML.sln" /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143
+        msbuild "CastelOfC++/castle_of_SFML/castle_of_SFML.sln" /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /v:minimal
     
     - name: Create Debug package
       run: |
