@@ -8,6 +8,35 @@
 /src/project_name_backend/.coverage*
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Fichiers de précompilation
+*.ipch
+
+# Dossier .vs de Visual Studio
+.vs/
+
+# Fichiers de build temporaires
+*.obj
+*.pdb
+*.exe
+*.dll
+*.log
+*.cache
+*.suo
+*.user
+*.VC.db
+*.VC.opendb
+*.idb
+*.ilk
+*.aps
+*.ncb
+*.sdf
+*.opensdf
+*.tlog
+*.lastbuildstate
+*.vscode/
+
+
+
 # ide
 .idea/
 *.dll
