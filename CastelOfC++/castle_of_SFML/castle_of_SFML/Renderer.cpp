@@ -8,6 +8,7 @@ Renderer::Renderer() {
 }
 
 void Renderer::init(sf::RenderWindow* window) {
+    // accès a la fenetre du jeu
     this->window = window;
 }
 

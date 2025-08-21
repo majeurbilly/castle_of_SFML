@@ -9,6 +9,7 @@ Player::Player() : x(0), y(0), angle(0), moveSpeed(5.0f), rotationSpeed(0.1f),
 }
 
 void Player::init(float x, float y, float angle) {
+    // position de départ du joueur
     this->x = x;
     this->y = y;
     this->angle = angle;
@@ -39,9 +40,11 @@ void Player::turnRight() {
 }
 
 void Player::castRays(const Map& map) {
+    // calculer l'angle du champs de vision
     float rayAngleStep = fov / numRays;
     float startAngle = angle - fov / 2;
     
+    // pour tout les objet, calculer la distance 
     for (int i = 0; i < numRays; i++) {
         float rayAngle = startAngle + i * rayAngleStep;
         float distance = map.getDistanceToWall(x, y, rayAngle);
@@ -50,6 +53,7 @@ void Player::castRays(const Map& map) {
         float endX = x + cos(rayAngle) * distance;
         float endY = y + sin(rayAngle) * distance;
         
+        // 
         rays[i] = Ray(x, y, endX, endY);
         distances[i] = distance;
     }

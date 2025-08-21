@@ -1,13 +1,13 @@
 #include "Map.h"
 #include <cmath>
 
-Map::Map() : mapWidth(800), mapHeight(600) {
+Map::Map() : mapWidth(1800), mapHeight(1600) {
 }
 
 void Map::init() {
-    // Créer les murs du château
+    // Créer les murs de la map  (x,y  x,y)
     // Murs extérieurs
-    walls.push_back(Wall(100, 100, 700, 100));  // Mur nord
+    walls.push_back(Wall(100, 100, 700, 100));  // Mur nord 
     walls.push_back(Wall(700, 100, 700, 500));  // Mur est
     walls.push_back(Wall(700, 500, 100, 500));  // Mur sud
     walls.push_back(Wall(100, 500, 100, 100));  // Mur ouest
@@ -107,5 +107,6 @@ float Map::getDistanceToWall(float startX, float startY, float angle) const {
     
     return minDistance == std::numeric_limits<float>::max() ? 1000.0f : minDistance;
 }
+
 
 

@@ -19,6 +19,7 @@ void Game::run() {
 }
 
 void Game::handleEvents() {
+	// tant que la file event contient une valeur provenant de la fenetre
 	while (const std::optional<sf::Event> event = window.pollEvent()) {
 		// Fermeture de la fenêtre
 		if (event->is<sf::Event::Closed>()) {
@@ -57,10 +58,11 @@ void Game::update() {
 }
 
 void Game::render() {
+	
     renderer.clear();
     
-    // Lancer les rayons depuis la position du joueur
-    player.castRays(map);
+	// calculer l'angle du champs de vision du perso
+	player.castRays(map);
     
     // Rendu de la vue 3D
     std::vector<float> distances = player.getDistances();
