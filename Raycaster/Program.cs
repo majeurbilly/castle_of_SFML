@@ -37,6 +37,10 @@ class Program
         Font font = new Font(ResourcePath("arial.ttf"));
         Text text = new Text("", font);
         text.Position = new Vector2f(SCREEN_WIDTH - 200, 20);
+        Text uiScore = new Text("", font, 24) { Position = new Vector2f(10, 10), FillColor = Color.White };
+        Text uiKnife = new Text("COUTEAU EQUIPE ! [ESPACE] pour attaquer", font, 20) { Position = new Vector2f(10, 40), FillColor = Color.Cyan };
+        Text uiGameOver = new Text("GAME OVER\nAppuyez sur R pour recommencer", font, 50) { FillColor = Color.Red };
+        uiGameOver.Position = new Vector2f(SCREEN_WIDTH / 2f - 200f, SCREEN_HEIGHT / 2f - 50f);
         ContextSettings context = new ContextSettings() { AntialiasingLevel = 16 };
         RenderWindow window = new RenderWindow(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Raycaster", Styles.Default, new ContextSettings() { AntialiasingLevel = 4 });
         Texture textures = GetCombinedTexture();
@@ -67,10 +71,29 @@ class Program
             fpsClock.Restart();
             window.DispatchEvents();
             float deltaTime = clock.Restart().AsSeconds();
+            if (isGameOver && Keyboard.IsKeyPressed(Keyboard.Key.R))
+            {
+                score = 0;
+                survivalTimer = 0f;
+                isGameOver = false;
+                hasKnife = false;
+                isKnifeSpawned = true;
+                Vector2f newPlayerPos = map.GetRandomEmptyPosition(rng);
+                Vector2f newGhostPos = map.GetRandomEmptyPosition(rng);
+                while (CellOf(newGhostPos) == CellOf(newPlayerPos))
+                    newGhostPos = map.GetRandomEmptyPosition(rng);
+                Vector2f newKnifePos = map.GetRandomEmptyPosition(rng);
+                while (CellOf(newKnifePos) == CellOf(newPlayerPos) || CellOf(newKnifePos) == CellOf(newGhostPos))
+                    newKnifePos = map.GetRandomEmptyPosition(rng);
+                player.Position = newPlayerPos;
+                ghost.Position = newGhostPos;
+                knife.Position = newKnifePos;
+            }
             if (!isGameOver)
             {
                 if (GameLogic.AdvanceSurvival(ref survivalTimer, ref score, deltaTime))
                     Console.WriteLine($"Score: {score}");
+                uiScore.DisplayedString = $"Score: {score} | Survie: {(int)survivalTimer}s";
 
                 if (GameLogic.TryPickupKnife(ref hasKnife, ref isKnifeSpawned, MathUtils.CalculateDistance(player.Position, knife.Position), 0.5f * Tile.TILESIZE_X))
                     Console.WriteLine("Couteau équipé ! Appuie sur ESPACE pour attaquer.");
@@ -118,6 +141,9 @@ class Program
             }
             double fps = 1.0 / fpsClock.ElapsedTime.AsSeconds();
             text.DisplayedString = $"Fps: {fps: 0.00}";
+            window.Draw(uiScore);
+            if (hasKnife) window.Draw(uiKnife);
+            if (isGameOver) window.Draw(uiGameOver);
             window.Draw(text);
             window.Display();
         }
