@@ -1,0 +1,29 @@
+name: .NET Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout du code
+      uses: actions/checkout@v4
+
+    - name: ⚙️ Setup .NET 6.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: 📦 Restore des dépendances
+      run: dotnet restore
+
+    - name: 🛠️ Build du projet
+      run: dotnet build --no-restore --configuration Release
+
+    - name: 🧪 Exécution des tests unitaires
+      run: dotnet test --no-build --verbosity normal --configuration Release

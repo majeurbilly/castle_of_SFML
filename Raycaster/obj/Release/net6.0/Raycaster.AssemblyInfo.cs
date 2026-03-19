@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Raycaster")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d62f4d56a88660bd278a5cf4550db30c2f5777a0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7fb3f160fadfb5e689845214448521ad103cbb16")]
 [assembly: System.Reflection.AssemblyProductAttribute("Raycaster")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Raycaster")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

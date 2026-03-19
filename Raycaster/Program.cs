@@ -55,12 +55,23 @@ class Program
         Clock clock = new Clock();
         Clock fpsClock = new Clock();
 
+        int score = 0;
+        float survivalTimer = 0f;
+        bool hasKnife = false;
+        bool isKnifeSpawned = true;
+        bool isGameOver = false;
+
         RenderStates states = new RenderStates(textures);
         while (window.IsOpen)
         {
             fpsClock.Restart();
             window.DispatchEvents();
             float deltaTime = clock.Restart().AsSeconds();
+            if (!isGameOver)
+            {
+                if (GameLogic.AdvanceSurvival(ref survivalTimer, ref score, deltaTime))
+                    Console.WriteLine($"Score: {score}");
+            }
             player.UpdatePosition(deltaTime, map);
             window.Clear(Color.Black);
            
