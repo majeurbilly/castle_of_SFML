@@ -67,22 +67,18 @@ namespace Raycaster
             if (SPressed)
             {
                 directionVector += new Vector2f(-MathF.Cos(Angle), -MathF.Sin(Angle));
-                //player.Velocity = new Vector2f(-MathF.Cos(player.Angle), -MathF.Sin(player.Angle));
             }
             if (WPressed)
             {
                 directionVector += new Vector2f(MathF.Cos(Angle), MathF.Sin(Angle));
-                //player.Velocity = new Vector2f(MathF.Cos(player.Angle), MathF.Sin(player.Angle));
             }
             if (APressed)
             {
                 directionVector += new Vector2f(MathF.Sin(Angle), -MathF.Cos(Angle));
-                //player.Velocity = new Vector2f(MathF.Sin(player.Angle), -MathF.Cos(player.Angle));
             }
             if (DPressed)
             {
                 directionVector += new Vector2f(-MathF.Sin(Angle), MathF.Cos(Angle));
-                //player.Velocity = new Vector2f(-MathF.Sin(player.Angle), MathF.Cos(player.Angle));
             }
             if (directionVector != new Vector2f(0, 0))
             {
@@ -110,7 +106,6 @@ namespace Raycaster
             Velocity = directionVector;
             Vector2f proposed = Position + Velocity * Speed * deltaTime;
 
-            // Déplacement séparé X/Y pour glisser le long des murs
             Vector2f attemptX = new Vector2f(proposed.X, Position.Y);
             if (!WouldCollide(attemptX, map))
                 Position = attemptX;

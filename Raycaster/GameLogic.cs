@@ -2,10 +2,6 @@ namespace Raycaster;
 
 public static class GameLogic
 {
-    /// <summary>
-    /// Avance le timer de survie et incrémente le score d'1 par seconde écoulée.
-    /// Retourne true si le score a changé (au moins +1) sur ce tick.
-    /// </summary>
     public static bool AdvanceSurvival(ref float survivalTimer, ref int score, float deltaTimeSeconds)
     {
         if (deltaTimeSeconds <= 0f)
@@ -22,10 +18,6 @@ public static class GameLogic
         return true;
     }
 
-    /// <summary>
-    /// Tente de ramasser le couteau si il est sur la carte et que la distance est sous le seuil.
-    /// Retourne true si le ramassage a réussi et met à jour hasKnife / isKnifeSpawned.
-    /// </summary>
     public static bool TryPickupKnife(ref bool hasKnife, ref bool isKnifeSpawned, float distanceToKnife, float pickupThreshold)
     {
         if (!isKnifeSpawned || distanceToKnife >= pickupThreshold)
@@ -35,9 +27,6 @@ public static class GameLogic
         return true;
     }
 
-    /// <summary>
-    /// Tente d'utiliser le couteau (attaque). Consomme l'arme et retourne true si le joueur avait le couteau et que l'input d'attaque est pressé.
-    /// </summary>
     public static bool TryUseKnife(ref bool hasKnife, bool isAttackInputPressed)
     {
         if (!hasKnife || !isAttackInputPressed)
@@ -46,10 +35,6 @@ public static class GameLogic
         return true;
     }
 
-    /// <summary>
-    /// Résout la collision avec le fantôme : si la distance est sous le seuil, le joueur meurt sauf s'il s'est défendu (hasKnife = true signifie qu'il a utilisé le couteau ce tour).
-    /// Retourne true si le fantôme a été tué (il faut le faire respawner ainsi que le couteau).
-    /// </summary>
     public static bool ResolveGhostCollision(ref bool isGameOver, ref int score, bool hasKnife, float distanceToGhost, float collisionThreshold)
     {
         if (distanceToGhost >= collisionThreshold)
