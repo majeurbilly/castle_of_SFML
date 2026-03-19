@@ -131,6 +131,26 @@ class Program
 
             window.Draw(skyAndGroundVertexArray, RenderStates.Default);
             window.Draw(wallVertexArray, states);
+
+            var spriteList = new List<(Vector2f pos, Color col)>();
+            spriteList.Add((ghost.Position, Color.Red));
+            if (isKnifeSpawned)
+                spriteList.Add((knife.Position, Color.Cyan));
+            spriteList.Sort((a, b) =>
+            {
+                float distA = MathUtils.CalculateDistance(player.Position, a.pos);
+                float distB = MathUtils.CalculateDistance(player.Position, b.pos);
+                return distB.CompareTo(distA);
+            });
+            var spritePositions = new List<Vector2f>();
+            var spriteColors = new List<Color>();
+            foreach (var s in spriteList)
+            {
+                spritePositions.Add(s.pos);
+                spriteColors.Add(s.col);
+            }
+            Rays.DrawSprites3D(window, player, spritePositions, spriteColors);
+
             if (ToggleMinimap)
             {
                 player.Draw(window);

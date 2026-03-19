@@ -1,12 +1,16 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using System.Collections.Generic;
 
 
 namespace Raycaster
 {
     public static class Rays
     {
+        /// <summary>Distance perpendiculaire du mur pour chaque rayon (index = colonne écran). Utilisé pour le sprite casting.</summary>
+        public static float[] ZBuffer = new float[Program.SCREEN_WIDTH];
+
         private static float fov = 1.0472f;
         private static float halfFov = fov / 2f;
         private static float increment = fov / Program.SCREEN_WIDTH;
@@ -183,6 +187,9 @@ namespace Raycaster
         }
         public static void Draw3DWorldTextured(Player player, RenderWindow window, Map map, VertexArray wallVA, VertexArray ceilingFloorVA)
         {
+            for (int i = 0; i < Program.SCREEN_WIDTH; i++)
+                ZBuffer[i] = float.MaxValue;
+
             for (int rayNum = 0; rayNum < Program.SCREEN_WIDTH; rayNum++)
             {
                 float angle = player.Angle - halfFov + rayNum * increment;
@@ -219,11 +226,12 @@ namespace Raycaster
                 Vector2i mapCoords = new Vector2i((int)(finalPos.X) / Tile.TILESIZE_Y, ((int)(finalPos.Y) / Tile.TILESIZE_Y));
 
                 finalDistance = finalDistance * MathF.Cos(angle - player.Angle);
+                ZBuffer[rayNum] = finalDistance;
 
                 float wallHeight = MathF.Floor(halfScreen / finalDistance * 100f);
                 float groundPixel = (int)(wallHeight + halfScreen);
                 float ceilingPixel = (int)(-wallHeight + halfScreen);
-                
+
                 int textureID = map.WorldMap[mapCoords.X, mapCoords.Y] - 1;
 
 
@@ -248,6 +256,63 @@ namespace Raycaster
             }
 
         }
+
+        /// <summary>Dessine les sprites en 3D (algorithme type Wolfenstein 3D). Les sprites doivent être triés du plus éloigné au plus proche.</summary>
+        public static void DrawSprites3D(RenderWindow window, Player player, List<Vector2f> spritePositions, List<Color> spriteColors)
+        {
+            if (spritePositions == null || spriteColors == null || spritePositions.Count != spriteColors.Count)
+                return;
+
+            Vector2f dir = player.Direction;
+            float planeScale = 0.66f;
+            Vector2f plane = new Vector2f(-dir.Y * planeScale, dir.X * planeScale);
+            float invDet = 1.0f / (plane.X * dir.Y - plane.Y * dir.X);
+
+            for (int i = 0; i < spritePositions.Count; i++)
+            {
+                Vector2f sprite = spritePositions[i];
+                Color color = spriteColors[i];
+
+                float spriteX = sprite.X - player.Position.X;
+                float spriteY = sprite.Y - player.Position.Y;
+
+                float transformX = invDet * (dir.Y * spriteX - dir.X * spriteY);
+                float transformY = invDet * (-plane.Y * spriteX + plane.X * spriteY);
+
+                if (transformY <= 0)
+                    continue;
+
+                int spriteScreenX = (int)((Program.SCREEN_WIDTH / 2f) * (1f + transformX / transformY));
+                float spriteHeight = MathF.Abs(Program.SCREEN_HEIGHT / transformY * 100f * 0.5f);
+                float spriteWidth = spriteHeight;
+                int drawHeight = (int)spriteHeight;
+                int drawWidth = (int)spriteWidth;
+
+                int drawStartX = spriteScreenX - drawWidth / 2;
+                int drawEndX = spriteScreenX + drawWidth / 2;
+                int drawStartY = halfScreen - drawHeight / 2;
+                int drawEndY = halfScreen + drawHeight / 2;
+
+                for (int stripe = drawStartX; stripe < drawEndX; stripe++)
+                {
+                    if (stripe < 0 || stripe >= Program.SCREEN_WIDTH)
+                        continue;
+                    if (transformY >= ZBuffer[stripe])
+                        continue;
+
+                    int yStart = drawStartY < 0 ? 0 : drawStartY;
+                    int yEnd = drawEndY > Program.SCREEN_HEIGHT ? Program.SCREEN_HEIGHT : drawEndY;
+                    if (yStart >= yEnd)
+                        continue;
+
+                    RectangleShape column = new RectangleShape(new Vector2f(1f, yEnd - yStart));
+                    column.Position = new Vector2f(stripe, yStart);
+                    column.FillColor = color;
+                    window.Draw(column);
+                }
+            }
+        }
+
         public static Vector2f GetFinalRay(Player player, float angle, Map map)
         {
             Vector2f rayPosY = GetRayYHit(player.Position, angle, map);
