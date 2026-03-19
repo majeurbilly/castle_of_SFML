@@ -45,5 +45,24 @@ public static class GameLogic
         hasKnife = false;
         return true;
     }
+
+    /// <summary>
+    /// Résout la collision avec le fantôme : si la distance est sous le seuil, le joueur meurt sauf s'il s'est défendu (hasKnife = true signifie qu'il a utilisé le couteau ce tour).
+    /// Retourne true si le fantôme a été tué (il faut le faire respawner ainsi que le couteau).
+    /// </summary>
+    public static bool ResolveGhostCollision(ref bool isGameOver, ref int score, bool hasKnife, float distanceToGhost, float collisionThreshold)
+    {
+        if (distanceToGhost >= collisionThreshold)
+            return false;
+
+        if (hasKnife)
+        {
+            score += 1000;
+            return true;
+        }
+
+        isGameOver = true;
+        return false;
+    }
 }
 

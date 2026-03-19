@@ -75,8 +75,27 @@ class Program
                 if (GameLogic.TryPickupKnife(ref hasKnife, ref isKnifeSpawned, MathUtils.CalculateDistance(player.Position, knife.Position), 0.5f * Tile.TILESIZE_X))
                     Console.WriteLine("Couteau équipé ! Appuie sur ESPACE pour attaquer.");
 
-                if (GameLogic.TryUseKnife(ref hasKnife, Keyboard.IsKeyPressed(Keyboard.Key.Space)))
+                bool playerAttacked = GameLogic.TryUseKnife(ref hasKnife, Keyboard.IsKeyPressed(Keyboard.Key.Space));
+                if (playerAttacked)
                     Console.WriteLine("FIOUF ! Attaque lancée !");
+
+                bool ghostKilled = GameLogic.ResolveGhostCollision(ref isGameOver, ref score, playerAttacked, MathUtils.CalculateDistance(player.Position, ghost.Position), 0.8f * Tile.TILESIZE_X);
+                if (ghostKilled)
+                {
+                    Vector2f newGhostPos = map.GetRandomEmptyPosition(rng);
+                    while (CellOf(newGhostPos) == CellOf(player.Position))
+                        newGhostPos = map.GetRandomEmptyPosition(rng);
+                    Vector2f newKnifePos = map.GetRandomEmptyPosition(rng);
+                    while (CellOf(newKnifePos) == CellOf(player.Position) || CellOf(newKnifePos) == CellOf(newGhostPos))
+                        newKnifePos = map.GetRandomEmptyPosition(rng);
+                    ghost.Position = newGhostPos;
+                    knife.Position = newKnifePos;
+                    isKnifeSpawned = true;
+                    Console.WriteLine($"BOOM ! Fantôme tué ! Score: {score}");
+                }
+
+                if (isGameOver)
+                    Console.WriteLine($"GAME OVER ! Score final: {score}");
             }
             player.UpdatePosition(deltaTime, map);
             window.Clear(Color.Black);
