@@ -111,7 +111,8 @@ class Program
                 player.Draw(window);
                 map.DrawMinimap(window);
                 Rays.DrawMinimapRays(player, window, map);
-                
+                ghost.DrawOnMinimap(window);
+                if (isKnifeSpawned) knife.DrawOnMinimap(window);
             }
             double fps = 1.0 / fpsClock.ElapsedTime.AsSeconds();
             text.DisplayedString = $"Fps: {fps: 0.00}";
