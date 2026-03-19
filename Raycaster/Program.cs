@@ -96,8 +96,10 @@ class Program
 
                 if (isGameOver)
                     Console.WriteLine($"GAME OVER ! Score final: {score}");
+
+                player.UpdatePosition(deltaTime, map);
+                ghost.Update(deltaTime, map, player.Position);
             }
-            player.UpdatePosition(deltaTime, map);
             window.Clear(Color.Black);
            
             wallVertexArray.Clear();

@@ -8,8 +8,8 @@ public class MapTests
     [Fact]
     public void CalculateDistance_3_4_5_Triangle_IsCorrect()
     {
-        var a = new Vector2f(0f, 0f);
-        var b = new Vector2f(3f, 4f);
+        Vector2f a = new Vector2f(0f, 0f);
+        Vector2f b = new Vector2f(3f, 4f);
 
         float d = Raycaster.MathUtils.CalculateDistance(a, b);
 
@@ -19,7 +19,7 @@ public class MapTests
     [Fact]
     public void Map_WorldMap_HasExpectedDimensions_20x20()
     {
-        var map = new Raycaster.Map();
+        Raycaster.Map map = new Raycaster.Map();
 
         Assert.Equal(20, map.WorldMap.GetLength(0));
         Assert.Equal(20, map.WorldMap.GetLength(1));
@@ -30,7 +30,7 @@ public class MapTests
     [Fact]
     public void IsWallCell_OutOfBounds_IsTreatedAsWall()
     {
-        var map = new Raycaster.Map();
+        Raycaster.Map map = new Raycaster.Map();
 
         Assert.True(map.IsWallCell(-1, 0));
         Assert.True(map.IsWallCell(0, -1));
