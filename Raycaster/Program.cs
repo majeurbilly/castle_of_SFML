@@ -17,14 +17,28 @@ class Program
 
     public static void Main(string[] args)
     {
-        // Spawn au centre d'une case vide (évite d'être sur une frontière de tiles)
-        Player player = new Player(new Vector2f(Tile.TILESIZE_X * 1.5f, Tile.TILESIZE_Y * 1.5f));
+        Map map = new Map();
+
+        Random rng = new Random();
+        Vector2i CellOf(Vector2f p) => new Vector2i((int)(p.X / Tile.TILESIZE_X), (int)(p.Y / Tile.TILESIZE_Y));
+
+        Vector2f playerSpawn = map.GetRandomEmptyPosition(rng);
+        Vector2f ghostSpawn = map.GetRandomEmptyPosition(rng);
+        while (CellOf(ghostSpawn) == CellOf(playerSpawn))
+            ghostSpawn = map.GetRandomEmptyPosition(rng);
+
+        Vector2f knifeSpawn = map.GetRandomEmptyPosition(rng);
+        while (CellOf(knifeSpawn) == CellOf(playerSpawn) || CellOf(knifeSpawn) == CellOf(ghostSpawn))
+            knifeSpawn = map.GetRandomEmptyPosition(rng);
+
+        Player player = new Player(playerSpawn);
+        Ghost ghost = new Ghost(ghostSpawn);
+        Knife knife = new Knife(knifeSpawn);
         Font font = new Font(ResourcePath("arial.ttf"));
         Text text = new Text("", font);
         text.Position = new Vector2f(SCREEN_WIDTH - 200, 20);
         ContextSettings context = new ContextSettings() { AntialiasingLevel = 16 };
         RenderWindow window = new RenderWindow(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Raycaster", Styles.Default, new ContextSettings() { AntialiasingLevel = 4 });
-        Map map = new Map();
         Texture textures = GetCombinedTexture();
         VertexArray skyAndGroundVertexArray = new VertexArray(PrimitiveType.Lines, SCREEN_WIDTH * 18);
         VertexArray wallVertexArray = new VertexArray(PrimitiveType.Lines, SCREEN_WIDTH * 18);
@@ -65,7 +79,6 @@ class Program
             }
             double fps = 1.0 / fpsClock.ElapsedTime.AsSeconds();
             text.DisplayedString = $"Fps: {fps: 0.00}";
-            //window.Draw(textureDebug);
             window.Draw(text);
             window.Display();
         }

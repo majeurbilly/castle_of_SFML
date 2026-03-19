@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\Raycaster.csproj": {}
+    "c:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\Raycaster.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\Raycaster.csproj": {
+    "c:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\Raycaster.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\Raycaster.csproj",
+        "projectUniqueName": "c:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\Raycaster.csproj",
         "projectName": "Raycaster",
-        "projectPath": "C:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\Raycaster.csproj",
+        "projectPath": "c:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\Raycaster.csproj",
         "packagesPath": "C:\\Users\\jefou\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\obj\\",
+        "outputPath": "c:\\Users\\jefou\\OneDrive\\Desktop\\castle_of_SFML\\Raycaster\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

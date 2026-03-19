@@ -43,6 +43,46 @@ namespace Raycaster
             
         }
 
+        public Vector2f GetRandomEmptyPosition(Random rng)
+        {
+            if (rng == null) throw new ArgumentNullException(nameof(rng));
+
+            int width = Size.X;
+            int height = Size.Y;
+            if (width <= 0 || height <= 0)
+                throw new InvalidOperationException("Map size is invalid.");
+
+            // Rejection sampling, then fallback to a scan in the unlikely case the map is nearly full.
+            for (int attempts = 0; attempts < 10_000; attempts++)
+            {
+                int x = rng.Next(0, width);
+                int y = rng.Next(0, height);
+                if (WorldMap[x, y] == 0)
+                {
+                    return new Vector2f(
+                        (x + 0.5f) * Tile.TILESIZE_X,
+                        (y + 0.5f) * Tile.TILESIZE_Y
+                    );
+                }
+            }
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (WorldMap[x, y] == 0)
+                    {
+                        return new Vector2f(
+                            (x + 0.5f) * Tile.TILESIZE_X,
+                            (y + 0.5f) * Tile.TILESIZE_Y
+                        );
+                    }
+                }
+            }
+
+            throw new InvalidOperationException("No empty (0) cell exists in the map.");
+        }
+
         public bool IsWallCell(int cellX, int cellY)
         {
             if (cellX < 0 || cellY < 0 || cellX >= Size.X || cellY >= Size.Y)
