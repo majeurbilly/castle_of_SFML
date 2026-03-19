@@ -208,13 +208,11 @@ namespace Raycaster
                 float finalDistance = 0;
                 int textureX = 0;
                 Color brightness = Color.White;
-                int side = 0;
                 if (distanceY < distanceX)
                 {
                     finalPos = rayY;
                     finalDistance = distanceY;
                     textureX = (int)(finalPos.Y * (TEXTURE_SIZE_X / Tile.TILESIZE_X) % TEXTURE_SIZE_X);
-                    side = 1;
                 }
                 if (distanceX < distanceY)
                 {

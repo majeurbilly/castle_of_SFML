@@ -199,9 +199,10 @@ class Program
         return Path.Combine(AppContext.BaseDirectory, "resources", fileName);
     }
 
-    public static void MouseMoved(object sender, MouseMoveEventArgs args, Player player)
+    public static void MouseMoved(object? sender, MouseMoveEventArgs args, Player player)
     {
-        RenderWindow window = (RenderWindow)sender;
+        if (sender is not RenderWindow window)
+            return;
         float sensitivity = 0.005f;
         Vector2i center = new Vector2i(Program.SCREEN_WIDTH / 2, Program.SCREEN_HEIGHT / 2);
         Vector2i mousePos = Mouse.GetPosition(window);
@@ -219,12 +220,12 @@ class Program
 
     private static void KeyPressed(object? sender, KeyEventArgs e, Player player)
     {
-        RenderWindow window = (RenderWindow)sender;
+        if (sender is not RenderWindow window)
+            return;
         if (e.Code == Keyboard.Key.Escape)
         {
             window.Close();
         }
-        Vector2f directionVector = new Vector2f();
         if (e.Code == Keyboard.Key.S)
         {
             player.SPressed = true;
@@ -250,7 +251,7 @@ class Program
             ToggleMinimap = !ToggleMinimap;
         }
     }
-    private static void KeyReleased(object sender, KeyEventArgs e, Player player)
+    private static void KeyReleased(object? sender, KeyEventArgs e, Player player)
     {
         if (e.Code == Keyboard.Key.S)
         {
