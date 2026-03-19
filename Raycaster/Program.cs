@@ -72,22 +72,11 @@ class Program
                 if (GameLogic.AdvanceSurvival(ref survivalTimer, ref score, deltaTime))
                     Console.WriteLine($"Score: {score}");
 
-                if (isKnifeSpawned)
-                {
-                    float distanceToKnife = MathUtils.CalculateDistance(player.Position, knife.Position);
-                    if (distanceToKnife < 0.5f * Tile.TILESIZE_X)
-                    {
-                        hasKnife = true;
-                        isKnifeSpawned = false;
-                        Console.WriteLine("Couteau équipé ! Appuie sur ESPACE pour attaquer.");
-                    }
-                }
+                if (GameLogic.TryPickupKnife(ref hasKnife, ref isKnifeSpawned, MathUtils.CalculateDistance(player.Position, knife.Position), 0.5f * Tile.TILESIZE_X))
+                    Console.WriteLine("Couteau équipé ! Appuie sur ESPACE pour attaquer.");
 
-                if (Keyboard.IsKeyPressed(Keyboard.Key.Space) && hasKnife)
-                {
-                    hasKnife = false;
+                if (GameLogic.TryUseKnife(ref hasKnife, Keyboard.IsKeyPressed(Keyboard.Key.Space)))
                     Console.WriteLine("FIOUF ! Attaque lancée !");
-                }
             }
             player.UpdatePosition(deltaTime, map);
             window.Clear(Color.Black);
