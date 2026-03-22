@@ -8,152 +8,150 @@
   <h3 align="center">Castle of SFML 🏰</h3>
 
   <p align="center">
-    Un jeu de type raycaster 3D développé en C++ avec la bibliothèque SFML
+    Un jeu de survie et moteur 3D de type raycaster
     <br />
-    <a href="#about"><strong>Explore the screenshots »</strong></a>
-      <br />
-      <br />
-      <a href="https://github.com/majeurbilly/castle_of_SFML/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
-      ·
-      <a href="https://github.com/majeurbilly/castle_of_SFML/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
-      ·
-      <a href="https://github.com/majeurbilly/castle_of_SFML/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Ask a Question</a>
+    <a href="#à-propos"><strong>Explorer la documentation »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/majeurbilly/castle_of_SFML/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Signaler un bug</a>
+    ·
+    <a href="https://github.com/majeurbilly/castle_of_SFML/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Proposer une fonctionnalité</a>
+    ·
+    <a href="https://github.com/majeurbilly/castle_of_SFML/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Poser une question</a>
   </p>
 </div>
 
+## Table des matières
 
-
-
-  ## Table of Contents
-  <ol>
-    <li>
-      <a href="#about">About</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#monitoring-tools-overview">Monitoring Tools Overview</a></li>
-    <li><a href="#authors--contributors">Authors & Contributors</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-
-
-
+<ol>
+  <li>
+    <a href="#à-propos">À propos</a>
+    <ul>
+      <li><a href="#technologies-utilisées">Technologies utilisées</a></li>
+    </ul>
+  </li>
+  <li>
+    <a href="#démarrage">Démarrage</a>
+    <ul>
+      <li><a href="#-jouer-sans-compiler-télécharger">🎮 Jouer sans compiler (Télécharger)</a></li>
+      <li><a href="#prérequis">Prérequis</a></li>
+      <li><a href="#installation">Installation</a></li>
+    </ul>
+  </li>
+  <li><a href="#utilisation">Utilisation</a></li>
+  <li><a href="#aperçu-des-outils-de-suivi">Aperçu des outils de suivi</a></li>
+  <li><a href="#auteurs--contributeurs">Auteurs & Contributeurs</a></li>
+  <li><a href="#remerciements">Remerciements</a></li>
+</ol>
 
 <!-- ABOUT THE PROJECT -->
-## About
+## À propos
 
-**Castle of SFML** est un moteur de jeu 3D de type raycaster inspiré des classiques comme Wolfenstein 3D. Le projet implémente un système de rendu 3D en temps réel utilisant la technique du raycasting pour créer l'illusion de profondeur et d'espace 3D.
+**Castle of SFML** est un jeu de survie et un moteur 3D de type raycaster. Initialement pensé en C++, le projet a été entièrement réécrit en C# pour offrir une architecture plus modulaire, incluant une IA de pathfinding (BFS) et un système de tests automatisés.
 
 ### Fonctionnalités principales
 
-- **Système de rendu 3D** : Affichage en temps réel d'un environnement 3D
-- **Gestion des collisions** : Détection automatique des murs et obstacles
-- **Contrôles fluides** : Mouvement et rotation du joueur
-- **Architecture modulaire** : Code organisé en classes séparées (Game, Player, Map, Renderer)
-- **Rendu des rayons** : Visualisation des rayons pour le débogage
+- **Système de rendu 3D** : Affichage en temps réel avec Raycasting et Sprite Casting (Z-Buffer)
+- **Intelligence Artificielle** : Ennemi (fantôme) traquant le joueur via un algorithme BFS
+- **Mécaniques de survie** : Ramassage d'armes (couteau), gestion du score et Game Over
+- **Architecture testable** : Logique de jeu séparée du rendu et couverte par des tests unitaires
+- **Rendu de minimap** : Visualisation de la grille 2D et des entités pour le débogage
 
 ### Architecture du projet
 
-- **Game** : Classe principale gérant la boucle de jeu
-- **Player** : Gestion du joueur, mouvement et casting des rayons
-- **Map** : Définition de l'environnement et gestion des collisions
-- **Renderer** : Affichage graphique et rendu 3D
-- **GameTypes** : Structures de données communes (Wall, Ray)
+- **Program / GameLogic** : Boucle principale et séparation des règles du jeu
+- **Player & Ghost** : Gestion des entités, mouvement et IA
+- **Map** : Définition du labyrinthe (20x20) et gestion des collisions
+- **Rays** : Algorithmes mathématiques de projection 3D
+- **Raycaster.Tests** : Projet de tests unitaires (xUnit)
 
 <details>
- <summary>
-    <a href="#images">
-      <img src="docs/images/button.png" alt="button image" height="40">
-    </a>
- </summary>
-<br>
-🛠️ Installation Process  
-<img src="docs/images/diagramme.png" alt="test">
-
+  <summary>
+    <span style="cursor: pointer; font-weight: bold;">
+      📂 Ouvrir le panneau
+    </span>
+  </summary>
+  <br>
+  🛠️ Processus d'installation
+  <img src="docs/images/diagramme.png" alt="Diagramme d'installation">
 </details>
 
-### Built With
+### Technologies utilisées
 
-- **C++** - Langage de programmation principal
-- **SFML 2.6** - Bibliothèque multimédia pour le graphisme, audio et entrées
-- **Visual Studio** - IDE et compilateur C++
-- **CMake** - Système de build et gestion des dépendances
+- **C# (.NET 6.0)** - Langage de programmation principal
+- **SFML.Net 2.5** - Binding C# de la bibliothèque multimédia
+- **xUnit** - Framework pour les tests unitaires
+- **GitHub Actions** - Pipeline CI/CD pour les tests automatisés
 
-## Getting Started
+## Démarrage
 
-### Prerequisites
+### 🎮 Jouer sans compiler (Télécharger)
 
-To work with this project, you need to have:
+Une version jouable (.exe) est compilée automatiquement à chaque mise à jour du code. Pour jouer directement :
 
-- **Visual Studio 2019 ou plus récent** avec support C++17
-- **SFML 2.6** (bibliothèques et headers)
-- **Windows 10/11** (développé et testé sur Windows)
+1. Va dans l'onglet **Releases** du dépôt GitHub.
+2. Repère la version **Latest Build** (qui est toujours la plus récente).
+3. Déroule la section **Assets** en bas de cette release et clique sur **CastleOfSFML-Windows.zip** pour le télécharger.
+4. Extrais le dossier compressé (clic droit → Extraire tout).
+5. Double-clique sur `Raycaster.exe` et essaie de survivre !
+
+### Prérequis
+
+Pour travailler sur ce projet, tu as besoin de :
+
+- **SDK .NET 6.0** ou plus récent
+- **SFML.Net** (Géré via NuGet ou les dll locales)
+- **Windows / Linux / macOS** (Compatible multiplateforme via .NET)
 - **Git** pour cloner le repository
 
 ### Installation
 
-1. Open your **terminal**.
+1. Ouvre ton **terminal**.
 2. Clone le repository : `git clone https://github.com/majeurbilly/castle_of_SFML.git`
-3. Install **SFML 2.6** depuis [sfml-dev.org](https://www.sfml-dev.org/download.php)
-4. Install **Visual Studio** avec support C++ Desktop Development
-5. Run the program:
-   Ouvrir `castle_of_SFML.sln` dans Visual Studio et compiler
+3. Navigue dans le dossier du projet : `cd castle_of_SFML`
+4. Compile le projet : `dotnet build`
+5. Exécute les tests (optionnel) : `dotnet test`
+6. Lance le programme : `dotnet run --project Raycaster` (ou ouvre le `.sln` dans Visual Studio et fais F5)
 
-## Usage
-
-### Compilation et exécution
-
-1. In **Visual Studio**, ouvrir le fichier `castle_of_SFML.sln`
-2. Configurer les chemins SFML dans les propriétés du projet
-3. Build le projet (Ctrl+Shift+B)
-4. Run: F5 pour lancer en mode debug
+## Utilisation
 
 ### Contrôles du jeu
 
 - **ZQSD** ou **WASD** : Déplacement du joueur
 - **Souris** : Rotation de la caméra
+- **Espace** : Attaquer avec le couteau (si équipé)
+- **M** : Afficher/Masquer la minimap
+- **R** : Recommencer la partie après un Game Over
 - **Échap** : Quitter le jeu
 
-## Monitoring Tools Overview
+## Aperçu des outils de suivi
 
-### **Visual Studio Debugger**
+### .NET CLI & xUnit
+
+- Lancement rapide des tests de logique métier (GameLogic, MathUtils)
+- Exécution isolée sans nécessiter l'interface graphique (idéal pour GitHub Actions)
+
+### Visual Studio
+
 - Points d'arrêt et inspection des variables
-- Profiling des performances
-- Analyse de la mémoire
+- Analyse de la mémoire et des performances
 
-### **SFML Debug Mode**
-- Validation des ressources graphiques
-- Gestion des erreurs OpenGL
-- Logs de débogage
+### Console Output
 
-### **Console Output**
-- Affichage des informations de jeu
-- Statistiques de performance
-- Messages d'erreur détaillés
+- Affichage du score en temps réel
+- Notifications d'état (Couteau ramassé, Fantôme tué, Game Over)
 
-## Authors & Contributors
+## Auteurs & Contributeurs
 
 **Développeur principal :** [majeurbilly](https://github.com/majeurbilly)
 
-Ce projet est développé dans le cadre d'un apprentissage du développement de jeux vidéo en C++ avec SFML.
+Ce projet est développé dans le cadre d'un apprentissage du développement de jeux vidéo, des mathématiques de rendu 3D et des bonnes pratiques en C# (CI/CD, Tests Unitaires).
 
-## Acknowledgments
+## Remerciements
 
-Remerciment:
+Remerciements :
 
-* [SFML Team](https://www.sfml-dev.org/) - Bibliothèque multimédia exceptionnelle
-* [Visual Studio](https://visualstudio.microsoft.com/) - IDE puissant pour le développement C++
-* [Wolfenstein 3D](https://fr.wikipedia.org/wiki/Wolfenstein_3D) - Inspiration pour le style de jeu raycaster
+- [3DSage](https://github.com/3DSage/OpenGL-Raycaster_v1) 
+- [Charles Lecuyer](https://github.com/charlesalecuyer/RaycastingEngine)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+<p align="right">(<a href="#table-des-matières">retour en haut</a>)</p>
