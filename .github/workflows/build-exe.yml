@@ -24,7 +24,10 @@ jobs:
       run: dotnet publish Raycaster/Raycaster.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./build_output
 
     - name: 📁 Copier les dossiers de ressources
-      run: Copy-Item -Path "Raycaster/resources" -Destination "./build_output/resources" -Recurse -ErrorAction SilentlyContinue
+      # Crée le dossier de destination et copie le contenu récursivement. Sans SilentlyContinue pour voir les erreurs !
+      run: |
+        New-Item -ItemType Directory -Force -Path "./build_output/resources"
+        Copy-Item -Path "Raycaster/resources/*" -Destination "./build_output/resources" -Recurse
 
     - name: 📦 Créer l'archive ZIP
       run: Compress-Archive -Path "./build_output/*" -DestinationPath "CastleOfSFML-Windows.zip"
