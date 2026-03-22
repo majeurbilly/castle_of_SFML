@@ -73,7 +73,7 @@
   </summary>
   <br>
   🛠️ Processus d'installation
-  <img src="docs/images/diagramme.png" alt="Diagramme d'installation">
+  <img src="docs/images/jeux.png" alt="Demo jeux">
 </details>
 
 ### Technologies utilisées
